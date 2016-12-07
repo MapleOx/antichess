@@ -77,11 +77,11 @@ bool possible_move (char *input);
 void post_thinking (long int score);
 void print_move (move_s moves[], int m, FILE *stream);
 void push_king (move_s moves[], int *num_moves, int from, int target, 
-		int castle_type);
-void push_knight (move_s moves[], int *num_moves, int from, int target);
+		int castle_type, bool *can_capture);
+void push_knight (move_s moves[], int *num_moves, int from, int target, bool *can_capture);
 void push_pawn (move_s moves[], int *num_moves, int from, int target, 
-		bool is_ep);
-void push_slide (move_s moves[], int *num_moves, int from, int target);
+		bool is_ep, bool *can_capture);
+void push_slide (move_s moves[], int *num_moves, int from, int target, bool *can_capture);
 long int qsearch (int alpha, int beta, int depth);
 void rdelay (int time_in_s);
 long int rdifftime (rtime_t end, rtime_t start);
