@@ -43,10 +43,19 @@ void order_moves (move_s moves[], long int move_ordering[], int num_moves,
 
   /* sort out move ordering scores in move_ordering, using implemented
      heuristics: */
-
   int cap_values[14] = {
+      0,100,100,200,200,0,0,300,300,500,500,200,200,0};
+  //int cap_values_opening[14] = {
+      //0,100,100,200,200,0,0,300,300,500,500,200,200,0};
+  int cap_values_end[14] = {
     0,100,100,310,310,0,0,500,500,955,955,325,325,0};
   int i, from, target, promoted, captured;
+
+  // if (piece_count > 5) {
+  //   cap_values = cap_values_opening;
+  // } else {
+  //   cap_values = cap_values_end;
+  // }
 
   /* fill the move ordering array: */
 
@@ -722,7 +731,7 @@ move_s think (void) {
       last_root_score = cur_score;
       /* if our PV is really short, try to get some of it from hash info
 	 (don't modify this if it is a mate / draw though): */
-      if (pv_length[1] <= 2 && i_depth > 1 && abs (cur_score) < (INF-100) &&
+      if (pv_length[1] <= 2 && i_depth > 1 && labs (cur_score) < (INF-100) &&
 	  result != stalemate && result != draw_by_fifty &&
 	  result != draw_by_rep)
 	hash_to_pv (i_depth);

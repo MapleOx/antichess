@@ -39,7 +39,9 @@ SOFTWARE.
 
 /* these tables will be used for positional bonuses: */
 
-int bishop[144] = {
+int *bishop;
+
+int bishop_end[144] = {
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,-5,-5,-5,-5,-5,-5,-5,-5,0,0,
@@ -53,7 +55,23 @@ int bishop[144] = {
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0};
 
-int knight[144] = {
+int bishop_start[144] = {
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,-5,-5,-5,-5,-5,-5,-5,-5,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,-5,-5,-5,-5,-5,-5,-5,-5,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0};
+
+int *knight;
+
+int knight_end[144] = {
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,-10,-5,-5,-5,-5,-5,-5,-10,0,0,
@@ -67,12 +85,28 @@ int knight[144] = {
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0};
 
-long int white_pawn[144] = {
+int knight_start[144] = {
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,-10,-5,-5,-5,-5,-5,-5,-10,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,-10,-5,-5,-5,-5,-5,-5,-10,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0};
+
+long int *white_pawn;
+
+long int white_pawn_start[144] = {
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,-5,-5,0,0,0,0,0,
-0,0,1,2,3,4,4,3,2,1,0,0,
+0,0,0,0,0,0,-5,0,0,0,0,0,
+0,0,1,2,3,0,0,0,2,1,0,0,
 0,0,2,4,6,8,8,6,4,2,0,0,
 0,0,3,6,9,12,12,9,6,3,0,0,
 0,0,4,8,12,16,16,12,8,4,0,0,
@@ -81,7 +115,23 @@ long int white_pawn[144] = {
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0};
 
-int black_pawn[144] = {
+long int white_pawn_end[144] = {
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,-5,-5,0,0,0,0,0,
+    0,0,1,2,3,4,4,3,2,1,0,0,
+    0,0,2,4,6,8,8,6,4,2,0,0,
+    0,0,3,6,9,12,12,9,6,3,0,0,
+    0,0,4,8,12,16,16,12,8,4,0,0,
+    0,0,5,10,15,20,20,15,10,5,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0};
+
+int *black_pawn;
+
+int black_pawn_start[144] = {
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -89,11 +139,25 @@ int black_pawn[144] = {
 0,0,4,8,12,16,16,12,8,4,0,0,
 0,0,3,6,9,12,12,9,6,3,0,0,
 0,0,2,4,6,8,8,6,4,2,0,0,
-0,0,1,2,3,4,4,3,2,1,0,0,
-0,0,0,0,0,-5,-5,0,0,0,0,0,
+0,0,1,2,3,0,0,0,2,1,0,0,
+0,0,0,0,0,0,-5,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0};
+
+int black_pawn_end[144] = {
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,5,10,15,20,20,15,10,5,0,0,
+    0,0,4,8,12,16,16,12,8,4,0,0,
+    0,0,3,6,9,12,12,9,6,3,0,0,
+    0,0,2,4,6,8,8,6,4,2,0,0,
+    0,0,1,2,3,4,4,3,2,1,0,0,
+    0,0,0,0,0,-5,-5,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0};
 
 /* to be used during opening and middlegame for white king positioning: */
 int white_king[144] = {
@@ -146,7 +210,12 @@ int rev_rank[9] = {
 
 
 long int end_eval (void) {
-
+    
+    knight = knight_end;
+    bishop = bishop_end;
+    white_pawn = white_pawn_end;
+    black_pawn = black_pawn_end;
+    
   /* return a score for the current endgame position: */
 
   int i, pawn_file, pawns[2][11], white_back_pawn[11], black_back_pawn[11],
@@ -284,7 +353,7 @@ long int end_eval (void) {
 	break;
 
       case (wrook):
-	score += 500;
+	score += 300;
 	
 	/* bonus for being on the 7th (a bit bigger bonus in the endgame, b/c
 	   a rook on the 7th can be a killer in the endgame): */
@@ -304,7 +373,7 @@ long int end_eval (void) {
 	break;
 
       case (brook):
-	score -= 500;
+	score -= 300;
 
 	/* bonus for being on the 7th (a bit bigger bonus in the endgame, b/c
 	   a rook on the 7th can be a killer in the endgame): */
@@ -324,31 +393,31 @@ long int end_eval (void) {
 	break;
 
       case (wbishop):
-	score += 325;
+	score += 200;
 	score += bishop[i];
 	break;
 
       case (bbishop):
-	score -= 325;
+	score -= 200;
 	score -= bishop[i];
 	break;
 
       case (wknight):
-	score += 310;
+	score += 200;
 	score += knight[i];
 	break;
 
       case (bknight):
-	score -= 310;
+	score -= 200;
 	score -= knight[i];
 	break;
 
       case (wqueen):
-	score += 900;
+	score += 500;
 	break;
 
       case (bqueen):
-	score -= 900;
+	score -= 500;
 	break;
 
       case (wking):
@@ -390,24 +459,12 @@ long int end_eval (void) {
 }
 
 
-long int eval (void) {
-
-  /* select the appropriate eval() routine: */
-
-  if (piece_count > 11) {
-    return (opn_eval ());
-  }
-  else if (piece_count < 5) {
-    return (end_eval ());
-  }
-  else {
-    return (mid_eval ());
-  }
-
-}
-
-
 long int mid_eval (void) {
+    
+    knight = knight_start;
+    bishop = bishop_start;
+    white_pawn = white_pawn_end;
+    black_pawn = black_pawn_end;
 
   /* return a score for the current middlegame position: */
 
@@ -484,10 +541,10 @@ long int mid_eval (void) {
 	/* give bonuses for passed pawns: */
 	if (!pawns[0][pawn_file] && rank >= black_back_pawn[pawn_file-1] &&
 	    rank >= black_back_pawn[pawn_file+1]) {
-	  score += 2*white_pawn[i];
+	  score += 4*white_pawn[i];
 	  /* give an extra bonus if a connected, passed pawn: */
 	  if (!isolated)
-	    score += 15;
+	    score += 30;
 	}
 
 	break;
@@ -523,16 +580,16 @@ long int mid_eval (void) {
 	/* give bonuses for passed pawns: */
 	if (!pawns[1][pawn_file] && rank <= white_back_pawn[pawn_file-1] &&
 	    rank <= white_back_pawn[pawn_file+1]) {
-	  score -= 2*black_pawn[i];
+	  score -= 4*black_pawn[i];
 	  /* give an extra bonus if a connected, passed pawn: */
 	  if (!isolated)
-	    score -= 15;
+	    score -= 30;
 	}
 
 	break;
 
       case (wrook):
-	score += 500;
+	score += 300;
 	
 	/* bonus for being on the 7th: */
 	if (rank == 7)
@@ -551,7 +608,7 @@ long int mid_eval (void) {
 	break;
 
       case (brook):
-	score -= 500;
+	score -= 300;
 
 	/* bonus for being on the 7th: */
 	if (rank == 2)
@@ -570,31 +627,31 @@ long int mid_eval (void) {
 	break;
 
       case (wbishop):
-	score += 325;
+	score += 200;
 	score += bishop[i];
 	break;
 
       case (bbishop):
-	score -= 325;
+	score -= 200;
 	score -= bishop[i];
 	break;
 
       case (wknight):
-	score += 310;
+	score += 200;
 	score += knight[i];
 	break;
 
       case (bknight):
-	score -= 310;
+	score -= 200;
 	score -= knight[i];
 	break;
 
       case (wqueen):
-	score += 900;
+	score += 500;
 	break;
 
       case (bqueen):
-	score -= 900;
+	score -= 500;
 	break;
 
       case (wking):
@@ -603,7 +660,7 @@ long int mid_eval (void) {
 	/* encourage castling, and give a penalty for moving the king without
 	   castling */
 	if (white_castled)
-	  score += 20;
+	  score += 40;
 	else if (moved[30]) {
 	  score -= 7;
 	  /* make the penalty bigger if the king is open, leaving the other
@@ -637,7 +694,7 @@ long int mid_eval (void) {
 	/* encourage castling, and give a penalty for moving the king without
 	   castling */
 	if (black_castled)
-	  score -= 20;
+	  score -= 40;
 	else if (moved[114]) {
 	  score += 7;
 	  /* make the penalty bigger if the king is open, leaving the other
@@ -686,14 +743,14 @@ long int mid_eval (void) {
   if ((wking_pawn_file-bking_pawn_file) > 2 ||
       (bking_pawn_file-wking_pawn_file) > 2) {
     /* black pawn storms: */
-    score -= 3*(rev_rank[black_back_pawn[wking_pawn_file]]-2);
-    score -= 3*(rev_rank[black_back_pawn[wking_pawn_file+1]]-2);
-    score -= 3*(rev_rank[black_back_pawn[wking_pawn_file-1]]-2);
+    score -= 6*(rev_rank[black_back_pawn[wking_pawn_file]]-2);
+    score -= 6*(rev_rank[black_back_pawn[wking_pawn_file+1]]-2);
+    score -= 6*(rev_rank[black_back_pawn[wking_pawn_file-1]]-2);
 
     /* white pawn storms: */
-    score += 3*(white_back_pawn[bking_pawn_file]-2);
-    score += 3*(white_back_pawn[bking_pawn_file+1]-2);
-    score += 3*(white_back_pawn[bking_pawn_file-1]-2);
+    score += 6*(white_back_pawn[bking_pawn_file]-2);
+    score += 6*(white_back_pawn[bking_pawn_file+1]-2);
+    score += 6*(white_back_pawn[bking_pawn_file-1]-2);
 
     /* black opening up lines: */
     if (!pawns[0][wking_pawn_file])
@@ -735,6 +792,11 @@ long int mid_eval (void) {
 }
 
 long int opn_eval (void) {
+    
+    knight = knight_start;
+    bishop = bishop_start;
+    white_pawn = white_pawn_start;
+    black_pawn = black_pawn_start;
 
   /* return a score for the current opening position: */
 
@@ -871,7 +933,7 @@ long int opn_eval (void) {
 	break;
 
       case (wrook):
-	score += 500;
+	score += 300;
 	
 	/* bonus for being on the 7th: */
 	if (rank == 7)
@@ -890,7 +952,7 @@ long int opn_eval (void) {
 	break;
 
       case (brook):
-	score -= 500;
+	score -= 300;
 
 	/* bonus for being on the 7th: */
 	if (rank == 2)
@@ -909,44 +971,44 @@ long int opn_eval (void) {
 	break;
 
       case (wbishop):
-	score += 325;
+	score += 200;
 	score += bishop[i];
 	break;
 
       case (bbishop):
-	score -= 325;
+	score -= 200;
 	score -= bishop[i];
 	break;
 
       case (wknight):
-	score += 310;
+	score += 200;
 	score += knight[i];
 	break;
 
       case (bknight):
-	score -= 310;
+	score -= 200;
 	score -= knight[i];
 	break;
 
       case (wqueen):
-	score += 900;
+	score += 500;
 
 	/* a small penalty to discourage moving the queen in the opening
 	   before the other minors: */
 	if (i != 29)
 	  if (!moved[28] || !moved[27] || !moved[31] || !moved[32])
-	    score -= 4;
+	    score -= 12;
 
 	break;
 
       case (bqueen):
-	score -= 900;
+	score -= 500;
 
 	/* a small penalty to discourage moving the queen in the opening
 	   before the other minors: */
 	if (i != 113)
 	  if (!moved[112] || !moved[111] || !moved[115] || !moved[116])
-	    score += 4;
+	    score += 12;
 
 	break;
 
@@ -956,14 +1018,14 @@ long int opn_eval (void) {
 	/* encourage castling, and give a penalty for moving the king without
 	   castling */
 	if (white_castled)
-	  score += 12;
+	  score += 24;
 	else if (moved[30]) {
-	  score -= 4;
+	  score -= 8;
 	  /* make the penalty bigger if the king is open, leaving the other
 	     side a chance to gain tempo with files along the file, as well
 	     as building an attack: */
 	  if (!pawns[1][pawn_file])
-	    score -= 6;
+	    score -= 12;
 	}
 
 	/* in general, in the opening, don't worry quite so much about pawn
@@ -973,17 +1035,17 @@ long int opn_eval (void) {
 	   cover being far from the king, else give a penalty for the king
 	   not having any pawn cover: */
 	if (rank < white_back_pawn[pawn_file] && pawns[1][pawn_file])
-	  score -= 5*(white_back_pawn[pawn_file]-rank-1);
+	  score -= 10*(white_back_pawn[pawn_file]-rank-1);
 	else
-	  score -= 8;
+	  score -= 24;
 	if (rank < white_back_pawn[pawn_file+1] && pawns[1][pawn_file+1])
-	  score -= 4*(white_back_pawn[pawn_file+1]-rank-1);
+	  score -= 8*(white_back_pawn[pawn_file+1]-rank-1);
 	else
-	  score -= 8;
+	  score -= 24;
 	if (rank < white_back_pawn[pawn_file-1] && pawns[1][pawn_file-1])
-	  score -= 4*(white_back_pawn[pawn_file-1]-rank-1);
+	  score -= 8*(white_back_pawn[pawn_file-1]-rank-1);
 	else
-	  score -= 8;
+	  score -= 24;
 
 	break;
 
@@ -993,14 +1055,14 @@ long int opn_eval (void) {
 	/* encourage castling, and give a penalty for moving the king without
 	   castling */
 	if (black_castled)
-	  score -= 12;
+	  score -= 24;
 	else if (moved[114]) {
-	  score += 4;
+	  score += 8;
 	  /* make the penalty bigger if the king is open, leaving the other
 	     side a chance to gain tempo with files along the file, as well
 	     as building an attack: */
 	  if (!pawns[0][pawn_file])
-	    score += 6;
+	    score += 12;
 	}
 
 	/* in general, in the opening, don't worry quite so much about pawn
@@ -1010,17 +1072,17 @@ long int opn_eval (void) {
 	   cover being far from the king, else give a penalty for the king
 	   not having any pawn cover: */
 	if (rank > black_back_pawn[pawn_file] && pawns[0][pawn_file])
-	  score += 5*(rank-black_back_pawn[pawn_file]-1);
+	  score += 10*(rank-black_back_pawn[pawn_file]-1);
 	else
-	  score += 8;
+	  score += 24;
 	if (rank > black_back_pawn[pawn_file+1] && pawns[0][pawn_file+1])
-	  score += 4*(rank-black_back_pawn[pawn_file+1]-1);
+	  score += 8*(rank-black_back_pawn[pawn_file+1]-1);
 	else
-	  score += 8;
+	  score += 24;
 	if (rank > black_back_pawn[pawn_file-1] && pawns[0][pawn_file-1])
-	  score += 4*(rank-black_back_pawn[pawn_file-1]-1);
+	  score += 8*(rank-black_back_pawn[pawn_file-1]-1);
 	else
-	  score += 8;
+	  score += 24;
 
 	break;
     }
@@ -1059,19 +1121,19 @@ long int opn_eval (void) {
 
     /* black opening up lines: */
     if (!pawns[0][wking_pawn_file])
-      score -= 6;
+      score -= 12;
     if (!pawns[0][wking_pawn_file+1])
-      score -= 4;
+      score -= 8;
     if (!pawns[0][wking_pawn_file-1])
-      score -= 4;
+      score -= 8;
 
     /* white opening up lines: */
     if (!pawns[1][bking_pawn_file])
-      score += 6;
+      score += 12;
     if (!pawns[1][bking_pawn_file+1])
-      score += 4;
+      score += 8;
     if (!pawns[1][bking_pawn_file-1])
-      score += 4;
+      score += 8;
 
   }
 
@@ -1086,4 +1148,20 @@ long int opn_eval (void) {
     return -score;
   }
 
+}
+
+long int eval (void) {
+    
+    /* select the appropriate eval() routine: */
+    
+    if (piece_count > 11) {
+        return (opn_eval ());
+    }
+    else if (piece_count < 5) {
+        return (end_eval ());
+    }
+    else {
+        return (mid_eval ());
+    }
+    
 }

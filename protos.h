@@ -70,7 +70,7 @@ long int opn_eval (void);
 void order_moves (move_s moves[], long int move_ordering[], int num_moves,
 		  move_s *h_move);
 void perft (int depth);
-void parse_cmdline (int argc, char *argv[]);
+void parse_cmdline (int argc, char *argv[], int *comp_color);
 void perft_debug (void);
 move_s pgn_to_comp (const char *input);
 bool possible_move (char *input);

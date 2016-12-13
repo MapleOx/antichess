@@ -325,10 +325,12 @@ void init_game (void) {
 
   piece_count = 14;
 
-  post = TRUE;
+  post = FALSE;
 
-  moves_to_tc = 30;
-  min_per_game = 10;
+  time_left = 18000;
+  opp_time = 18000;
+  moves_to_tc = 0;
+  min_per_game = 6;
   time_cushion = 0;
 
   reset_piece_square ();
@@ -436,7 +438,7 @@ bool is_valid_comp (move_s in_move) {
 }
 
 
-void parse_cmdline (int argc, char *argv[]) {
+void parse_cmdline (int argc, char *argv[], int *comp_color) {
 
   /* parse command line switches */
 
@@ -445,7 +447,15 @@ void parse_cmdline (int argc, char *argv[]) {
 
   while (i < argc) {
     for (p = argv[i]; *p; p++) *p = tolower (*p);
-    if (!strcmp ("-hash", argv[i]) || !strcmp ("/hash", argv[i])) {
+
+    if (!strcmp ("-white", argv[i]) || !strcmp ("white", argv[i])) {
+      *comp_color = 1;
+      i++;
+    } else if (!strcmp ("-black", argv[i]) || !strcmp ("black", argv[i])) {
+      *comp_color = 0;
+      i++;
+    }
+    else if (!strcmp ("-hash", argv[i]) || !strcmp ("/hash", argv[i])) {
       if (++i >= argc) {
 	fprintf (stderr, "You must specify a hash size: faile -hash <size>\n");
 	shut_down (EXIT_FAILURE);
@@ -708,7 +718,7 @@ void start_up (void) {
 
   /* things to do on start up of the program */
 
-  printf ("Faile version 1.4\nby Adrien Regimbald\n\n\n");
+  //printf ("Faile version 1.4\nby Adrien Regimbald\n\n\n");
   rdelay (2);
 
 }

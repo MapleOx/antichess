@@ -137,8 +137,8 @@ move_s book_move (void) {
   }
 
   if ((book_f = fopen ("faile.obk", "rb")) == NULL) {
-    fprintf (stderr, "Couldn't open book file faile.obk!\n");
-    fprintf (stderr, "Proceeding without book.\n");
+    //fprintf (stderr, "Couldn't open book file faile.obk!\n");
+    //fprintf (stderr, "Proceeding without book.\n");
     use_book = FALSE;
     return (move);
   }

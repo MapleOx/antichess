@@ -69,12 +69,12 @@ int main (int argc, char *argv[]) {
 
   char input[STR_BUFF], *p, output[STR_BUFF];
   move_s move, comp_move;
-  int depth = 4, comp_color;
+  int depth = 4, comp_color = 0;
   bool force_mode, show_board;
   double nps, elapsed;
   clock_t cpu_start = 0, cpu_end = 0;
 
-  parse_cmdline (argc, argv);
+  parse_cmdline (argc, argv, &comp_color);
   start_up ();
   init_hash_values ();
   init_hash_tables ();
@@ -82,8 +82,7 @@ int main (int argc, char *argv[]) {
   init_book ();
   xb_mode = FALSE;
   force_mode = FALSE;
-  comp_color = 0;
-  show_board = TRUE;
+  show_board = FALSE;
   
   setbuf (stdout, NULL);
   setbuf (stdin, NULL);
@@ -97,7 +96,7 @@ int main (int argc, char *argv[]) {
       qnodes = 0;
       ply = 0;
 
-      start_time = rtime ();
+      start_time = rtime (); 
       cpu_start = clock ();
       comp_move = think ();
       cpu_end = clock ();
@@ -121,6 +120,11 @@ int main (int argc, char *argv[]) {
 	}
 
 	reset_piece_square ();
+
+	/* update the time left */
+    time_left = time_left - rdifftime(rtime(), start_time);
+    opp_time = time_left;
+
 	/* check to see if we mate our opponent with our current move: */
 	if (!result) {
 	  if (xb_mode) {
@@ -138,45 +142,45 @@ int main (int argc, char *argv[]) {
 	    printf ("\n%s\n", output);
 	  }
 	  if (result == white_is_mated) {
-	    printf ("0-1 {Black Mates}\n");
+	    fprintf (stderr, "0-1 {Black Mates}\n");
 	  }
 	  else if (result == black_is_mated) {
-	    printf ("1-0 {White Mates}\n");
+	    fprintf (stderr, "1-0 {White Mates}\n");
 	  }
 	  else if (result == draw_by_fifty) {
-	    printf ("1/2-1/2 {Fifty move rule}\n");
+	    fprintf (stderr, "1/2-1/2 {Fifty move rule}\n");
 	  }
 	  else if (result == draw_by_rep) {
-	    printf ("1/2-1/2 {3 fold repetition}\n");
+	    fprintf (stderr, "1/2-1/2 {3 fold repetition}\n");
 	  }
 	  else {
-	    printf ("1/2-1/2 {Draw}\n");
+	    fprintf (stderr, "1/2-1/2 {Draw}\n");
 	  }
 	}
       }
       /* we have been mated or there is a draw: */
       else {
 	if (result == white_is_mated) {
-	  printf ("0-1 {Black Mates}\n");
+	  fprintf (stderr, "0-1 {Black Mates}\n");
 	}
 	else if (result == black_is_mated) {
-	  printf ("1-0 {White Mates}\n");
+	  fprintf (stderr, "1-0 {White Mates}\n");
 	}
 	else if (result == stalemate) {
-	  printf ("1/2-1/2 {Stalemate}\n");
+	  fprintf (stderr, "1/2-1/2 {Stalemate}\n");
 	}
 	else if (result == draw_by_fifty) {
-	  printf ("1/2-1/2 {Fifty move rule}\n");
+	  fprintf (stderr, "1/2-1/2 {Fifty move rule}\n");
 	}
 	else if (result == draw_by_rep) {
-	  printf ("1/2-1/2 {3 fold repetition}\n");
+	  fprintf (stderr, "1/2-1/2 {3 fold repetition}\n");
 	}
 	else {
-	  printf ("1/2-1/2 {Draw}\n");
+	  fprintf (stderr, "1/2-1/2 {Draw}\n");
 	}
       }
-
     }
+
 
     /* get our input: */
     if (!xb_mode) {
@@ -184,7 +188,7 @@ int main (int argc, char *argv[]) {
 	printf ("\n");
 	display_board (stdout, 1-comp_color);
       }
-      printf ("Faile> ");
+       //printf ("Faile> ");
       rinput (input, STR_BUFF, stdin);
     }
     else {

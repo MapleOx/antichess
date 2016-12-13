@@ -133,9 +133,9 @@ void init_hash_tables (void) {
     fprintf (stderr, "Couldn't allocate memory for hash tables!\n");
     shut_down (EXIT_FAILURE);
   }
-  printf ("\nMemory Allocation:\n");
-  printf ("%lu hash entries * %lu bytes/entry = %lu kb of RAM\n",
-	  max_hash, element_size, (max_hash*element_size)>>10);
+  //printf ("\nMemory Allocation:\n");
+  //printf ("%lu hash entries * %lu bytes/entry = %lu kb of RAM\n",
+	  //max_hash, element_size, (max_hash*element_size)>>10);
 
   /* clear our hash tables of possible errant values: */
   memset (hash_table, 0, max_hash*element_size);
@@ -220,7 +220,7 @@ long int chk_hash (int alpha, int beta, int depth, int *type, move_s *move) {
     flag = hash_p->flag;
 
     /* adjust our score if it is a mate score: */
-    if (abs (score) > INF-100) {
+    if (labs (score) > INF-100) {
       if (score > 0)
 	score -= (ply);
       else
@@ -289,7 +289,7 @@ void store_hash (int alpha, int depth, int score, int flag, move_s move) {
   }
 
   /* adjust for mate scores: */
-  if (abs (score) > INF-100) {
+  if (labs (score) > INF-100) {
     if (score > 0)
       score += (ply);
     else
